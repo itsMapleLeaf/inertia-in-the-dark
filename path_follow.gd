@@ -7,7 +7,7 @@ extends PathFollow2D
 	set(value):
 		preview = value
 		progress = 0
-		
+
 var lifetime := 0.0
 
 func _process(delta: float) -> void:

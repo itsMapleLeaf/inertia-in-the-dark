@@ -58,17 +58,17 @@ var current_level_index: int:
 
 var next_level: String:
 	get: return levels[next_level_index]
-	
+
 var next_level_index: int:
 	get: return (current_level_index + 1) % levels.size()
-	
+
 var previous_level: String:
 	get: return levels[(current_level_index - 1) % levels.size()]
 
 func reset() -> void:
 	camera.position = global_position
 	camera.rotation = global_rotation
-	
+
 	global_position = Vector2.ZERO
 	rotation = 0
 	speed = 0
@@ -84,7 +84,7 @@ func reset() -> void:
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_parallel()
 	tween.tween_property(camera, "position", Vector2.ZERO, 0.3)
 	tween.tween_property(camera, "rotation", 0, 0.3)
-	
+
 	set_process(true)
 	set_process_unhandled_input(true)
 	visible = true
@@ -101,30 +101,30 @@ func charge_by(delta: float) -> void:
 func boost() -> void:
 	if not charging: return
 	charging = false
-	
+
 	speed = lerpf(MIN_BOOST_STRENGTH, MAX_BOOST_STRENGTH, charge_amount)
 	movement_angle = facing_angle
 	$Shaker.shake(max(3 * charge_amount, 1), 0.2)
 	$ChargeSound.stop()
 	$BoostSound.play()
-	
+
 	charge_amount = 0
 	boost_animation_player.stop()
 	boost_animation_player.play("boost")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if results_screen.visible: return
-	
+
 	if event.is_action_pressed("boost"):
 		charging = true
 		$ChargeSound.play()
-		
+
 	if event.is_action_released("boost"):
 		boost()
-	
+
 	if event.is_action_pressed("reset"):
 		reset()
-		
+
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
@@ -137,16 +137,16 @@ func _process(delta: float) -> void:
 	speed = move_toward(speed, 0, delta * DRAG / 2)
 	global_position += Vector2.UP.rotated(movement_angle) * speed * delta
 	speed = move_toward(speed, 0, delta * DRAG / 2)
-	
+
 	# apply movement and sound from strafing
 	global_position += Vector2.RIGHT.rotated(facing_angle) * strafing * STRAFE_SPEED * delta
-	
+
 	$StrafeSound.volume_db = -35 + absf(strafing) * 13
 	if strafing != 0 && not $StrafeSound.playing:
 		$StrafeSound.play()
 	elif strafing == 0 && $StrafeSound.playing:
 		$StrafeSound.stop()
-	
+
 	# apply gravity pit attraction
 	var gravity_pit = hitbox.get_overlapping_areas().filter(
 		func (area: Area2D): return area.is_in_group("GravityPit")
@@ -158,18 +158,18 @@ func _process(delta: float) -> void:
 		else:
 			return closest
 	)
-	
+
 	if gravity_pit is Area2D:
 		global_position = global_position.move_toward(
 			gravity_pit.global_position, delta * GRAVITY_PIT_STRENGTH
 		)
-	
+
 	# apply facing angle
 	rotation = facing_angle
-	
+
 	# apply turning
 	facing_angle += turning * TURN_SPEED * delta
-	
+
 	# update charge state
 	if charging:
 		charge_amount = minf(charge_amount + delta / CHARGE_TIME, 1)
@@ -178,19 +178,19 @@ func _process(delta: float) -> void:
 		$ChargeSound.pitch_scale = 1 + charge_amount
 	else:
 		charge_meter.get_parent().modulate.a -= delta / 0.3
-	
+
 	# tilt the sprite based on our strafing input
 	sprite.rotation = lerp_angle(sprite.rotation, strafing * STRAFE_ROTATION, delta * STRAFE_ROTATION_SPEED)
-	
+
 	# spawn smoke particles
 	smoke_wait_time -= max(speed / 20 * delta, delta * 10)
 	if smoke_wait_time <= 0:
 		smoke_wait_time += 1
-		
+
 		var smoke := preload("res://smoke.tscn").instantiate() as Node2D
 		smoke.global_position = smoke_spawn_marker.global_position
 		get_parent().get_child(get_index() - 1).add_sibling(smoke)
-		
+
 	# update completion time - only start counting when player starts moving
 	if speed > 0 or strafing != 0:
 		running_completion_time = true
@@ -204,56 +204,56 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		warp_effect.global_position = global_position
 		warp_effect.rotation = rotation
 		add_sibling(warp_effect)
-		
+
 		set_process.call_deferred(false)
 		visible = false
-		
+
 		$CompleteSound.play()
 		$StrafeSound.stop()
 		$ChargeSound.stop()
-		
+
 		_show_results()
-	
+
 	if area.is_in_group("LevelObstacle"):
 		_kill()
 
 func _on_level_area_detector_exited_level() -> void:
 	_kill()
-	
+
 func _kill():
 	var explosion := preload("res://explosion.tscn").instantiate() as Node2D
 	explosion.global_position = global_position
 	add_sibling(explosion)
-	
+
 	set_process.call_deferred(false)
 	set_process_unhandled_input(false)
 	visible = false
-	
+
 	$Shaker.shake(16, 0.2)
 	$DeathSound.play()
 	$StrafeSound.stop()
 	$ChargeSound.stop()
-	
+
 	await get_tree().create_timer(0.5).timeout
-	
+
 	reset()
 
 func _show_results():
 	set_process(false)
 	set_process_unhandled_input(false)
-	
+
 	results_title_label.text = "OBJECTIVE %s COMPLETE" % (current_level_index + 1)
 	results_screen.show()
-	
+
 	results_completion_time_label.text = "TIME: %.2f" % completion_time
-	
+
 	if next_level_index == 0:
 		next_mission_button.text = "RETURN TO FIRST MISSION"
 	else:
 		next_mission_button.text = "NEXT MISSION"
-		
+
 	previous_mission_button.visible = current_level_index > 0
-	
+
 	var buttons := results_screen.find_children("", "Button", true)
 	if buttons.size() > 0:
 		var first_button := buttons[0]
