@@ -1,0 +1,11 @@
+[gd_resource type="Theme" format=3 uid="uid://q5lsdktum6xl"]
+
+[ext_resource type="FontFile" uid="uid://c4pyawnt2hut4" path="res://resources/AvenuePixel1.1/OTF/AvenuePixel-Regular.otf" id="1_e1x85"]
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 0.6666667)
+Button/colors/font_focus_color = Color(0.30980393, 0.6313726, 1, 1)
+Button/colors/font_hover_color = Color(0.30980393, 0.6313726, 1, 1)
+Button/font_sizes/font_size = 25
+Button/fonts/font = ExtResource("1_e1x85")
+Label/fonts/font = ExtResource("1_e1x85")

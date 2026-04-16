@@ -15,16 +15,16 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="inertia in the dark"
-run/main_scene="res://levels/straight.tscn"
+run/main_scene="uid://bsng67sx00bfj"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [display]
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
-window/size/initial_position_type=3
 window/stretch/mode="viewport"
 window/stretch/scale=2.0
+window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=3
 
 [input]
