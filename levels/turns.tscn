@@ -3,6 +3,26 @@
 [ext_resource type="PackedScene" uid="uid://3iwnktuef6o7" path="res://level_area.tscn" id="1_8yauf"]
 [ext_resource type="PackedScene" uid="uid://uof154pm5wte" path="res://regular_collision_polygon_2d.tscn" id="1_djvd8"]
 [ext_resource type="PackedScene" uid="uid://bffyh0psdenmv" path="res://wormhole.tscn" id="2_qyguf"]
+[ext_resource type="Script" uid="uid://c2nxyh7qfqqs4" path="res://input_detector_switch.gd" id="4_q68x8"]
+[ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="5_h6wvb"]
+[ext_resource type="Texture2D" uid="uid://ctmm3ajslo4iu" path="res://resources/gdb-keyboard-2.png" id="6_w6sji"]
+[ext_resource type="Texture2D" uid="uid://3a514c7vrcyt" path="res://resources/gdb-xbox-2.png" id="7_ki3nf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ek7q"]
+atlas = ExtResource("6_w6sji")
+region = Rect2(304, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k77p"]
+atlas = ExtResource("6_w6sji")
+region = Rect2(336, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q68x8"]
+atlas = ExtResource("7_ki3nf")
+region = Rect2(216, 72, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6wvb"]
+atlas = ExtResource("7_ki3nf")
+region = Rect2(100, 180, 24, 24)
 
 [node name="Level" type="Node2D" unique_id=1428994057]
 
@@ -52,3 +72,94 @@ polygon = PackedVector2Array(508, -639, 483, -753, 495, -902, 467, -972, 357, -9
 
 [node name="Wormhole" parent="." unique_id=688532328 instance=ExtResource("2_qyguf")]
 position = Vector2(399.519, -1012.69)
+
+[node name="TurnInfoSwitch" type="Node" parent="." unique_id=378005438 node_paths=PackedStringArray("keyboard_node", "gamepad_node")]
+script = ExtResource("4_q68x8")
+keyboard_node = NodePath("../Control/TurnInfo/KeyboardInputs")
+gamepad_node = NodePath("../Control/TurnInfo/GamepadInputs")
+metadata/_custom_type_script = "uid://c2nxyh7qfqqs4"
+
+[node name="Control" type="Control" parent="." unique_id=2026300049]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("5_h6wvb")
+
+[node name="TurnInfo" type="VBoxContainer" parent="Control" unique_id=881589453]
+layout_mode = 0
+offset_left = 47.0
+offset_top = -106.0
+offset_right = 187.0
+offset_bottom = -23.0
+theme = ExtResource("5_h6wvb")
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Control/TurnInfo" unique_id=2044067156]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "STEER"
+horizontal_alignment = 1
+
+[node name="KeyboardInputs" type="HBoxContainer" parent="Control/TurnInfo" unique_id=1548430131]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="KeyboardKey" type="TextureRect" parent="Control/TurnInfo/KeyboardInputs" unique_id=1895408974]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_2ek7q")
+
+[node name="KeyboardKey2" type="TextureRect" parent="Control/TurnInfo/KeyboardInputs" unique_id=1979274667]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_7k77p")
+
+[node name="GamepadInputs" type="HBoxContainer" parent="Control/TurnInfo" unique_id=1307672079]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GamepadButton" type="TextureRect" parent="Control/TurnInfo/GamepadInputs" unique_id=253055817]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_q68x8")
+
+[node name="GamepadButton2" type="TextureRect" parent="Control/TurnInfo/GamepadInputs" unique_id=1292037461]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_h6wvb")
+
+[node name="TurnInfoLabel2" type="Label" parent="Control" unique_id=1557524201]
+layout_mode = 1
+offset_left = -197.0
+offset_top = -325.00003
+offset_right = -11.0
+offset_bottom = -270.00003
+rotation = 0.27299297
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "charge
+while steering"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="TurnInfoLabel3" type="Label" parent="Control" unique_id=1090005173]
+layout_mode = 1
+offset_left = 217.0
+offset_top = -500.0
+offset_right = 403.0
+offset_bottom = -445.0
+rotation = 1.3089969
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "release at the
+right time"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

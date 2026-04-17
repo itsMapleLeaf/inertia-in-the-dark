@@ -3,6 +3,25 @@
 [ext_resource type="PackedScene" uid="uid://3iwnktuef6o7" path="res://level_area.tscn" id="2_3wkdl"]
 [ext_resource type="PackedScene" uid="uid://bffyh0psdenmv" path="res://wormhole.tscn" id="2_4wdqf"]
 [ext_resource type="PackedScene" uid="uid://uof154pm5wte" path="res://regular_collision_polygon_2d.tscn" id="3_073sn"]
+[ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="4_knv56"]
+[ext_resource type="Texture2D" uid="uid://ctmm3ajslo4iu" path="res://resources/gdb-keyboard-2.png" id="5_ugwt2"]
+[ext_resource type="Texture2D" uid="uid://3a514c7vrcyt" path="res://resources/gdb-xbox-2.png" id="6_0ugow"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vbm6"]
+atlas = ExtResource("5_ugwt2")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vax0"]
+atlas = ExtResource("5_ugwt2")
+region = Rect2(96, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3o35"]
+atlas = ExtResource("6_0ugow")
+region = Rect2(216, 72, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdjtx"]
+atlas = ExtResource("6_0ugow")
+region = Rect2(100, 180, 24, 24)
 
 [node name="Level" type="Node2D" unique_id=74875295]
 metadata/_edit_horizontal_guides_ = []
@@ -27,3 +46,59 @@ polygon = PackedVector2Array(-56, -55, -100, -223, -88, -379, -8, -475, 8, -563,
 
 [node name="Wormhole" parent="." unique_id=1100357659 instance=ExtResource("2_4wdqf")]
 position = Vector2(-15.6906, -1146.48)
+
+[node name="Control" type="Control" parent="." unique_id=2000369120]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("4_knv56")
+
+[node name="StrafeInfo" type="VBoxContainer" parent="Control" unique_id=1946231554]
+layout_mode = 0
+offset_left = -207.0
+offset_top = -98.0
+offset_right = -98.0
+offset_bottom = -52.0
+theme = ExtResource("4_knv56")
+alignment = 1
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Control/StrafeInfo" unique_id=841025808]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "strafe sideways"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="KeyboardInputs" type="HBoxContainer" parent="Control/StrafeInfo" unique_id=71057053]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="KeyboardKey2" type="TextureRect" parent="Control/StrafeInfo/KeyboardInputs" unique_id=221800145]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_2vbm6")
+
+[node name="KeyboardKey" type="TextureRect" parent="Control/StrafeInfo/KeyboardInputs" unique_id=30285144]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_7vax0")
+
+[node name="GamepadInputs" type="HBoxContainer" parent="Control/StrafeInfo" unique_id=1122435214]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GamepadButton" type="TextureRect" parent="Control/StrafeInfo/GamepadInputs" unique_id=808331873]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_o3o35")
+
+[node name="GamepadButton2" type="TextureRect" parent="Control/StrafeInfo/GamepadInputs" unique_id=450740681]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_rdjtx")

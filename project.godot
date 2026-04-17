@@ -21,6 +21,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [autoload]
 
 ScreenManager="*uid://bayi8jblpbpw6"
+InputDetector="*uid://cqxob4bbsbe1p"
 
 [display]
 

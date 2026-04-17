@@ -3,6 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://3iwnktuef6o7" path="res://level_area.tscn" id="1_lcjjq"]
 [ext_resource type="PackedScene" uid="uid://uof154pm5wte" path="res://regular_collision_polygon_2d.tscn" id="2_g4hd8"]
 [ext_resource type="PackedScene" uid="uid://bffyh0psdenmv" path="res://wormhole.tscn" id="2_mig8h"]
+[ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="4_2ay8e"]
+[ext_resource type="Script" uid="uid://c2nxyh7qfqqs4" path="res://input_detector_switch.gd" id="4_un7ky"]
+[ext_resource type="Texture2D" uid="uid://dgjcnwwe682wn" path="res://resources/key_space_released.tres" id="5_4dg0a"]
+[ext_resource type="Script" uid="uid://blj1o2rj4ll6t" path="res://input_pressed_toggle.gd" id="5_w6glm"]
+[ext_resource type="Texture2D" uid="uid://cl1wc444x664s" path="res://resources/key_space_pressed.tres" id="6_w6glm"]
+[ext_resource type="Texture2D" uid="uid://3a514c7vrcyt" path="res://resources/gdb-xbox-2.png" id="9_11f3q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qccst"]
+atlas = ExtResource("9_11f3q")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omqug"]
+atlas = ExtResource("9_11f3q")
+region = Rect2(80, 48, 16, 16)
 
 [node name="Level" type="Node2D" unique_id=513736991]
 metadata/_edit_horizontal_guides_ = []
@@ -27,3 +41,122 @@ polygon = PackedVector2Array(-35, -82, -61, -264, -25, -472, -27, -576, 59, -591
 
 [node name="Wormhole" parent="." unique_id=186465948 instance=ExtResource("2_mig8h")]
 position = Vector2(-2, -669)
+
+[node name="ChargeInfoSwitch" type="Node" parent="." unique_id=1960497173 node_paths=PackedStringArray("keyboard_node", "gamepad_node")]
+script = ExtResource("4_un7ky")
+keyboard_node = NodePath("../BoostInfo/KeyboardControls")
+gamepad_node = NodePath("../BoostInfo/GamepadControls")
+metadata/_custom_type_script = "uid://c2nxyh7qfqqs4"
+
+[node name="BoostInfo" type="CenterContainer" parent="." unique_id=2110466789]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -119.0
+offset_right = 212.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="KeyboardControls" type="Control" parent="BoostInfo" unique_id=1276762919 node_paths=PackedStringArray("released_node", "pressed_node")]
+layout_mode = 2
+theme = ExtResource("4_2ay8e")
+script = ExtResource("5_w6glm")
+input_action = &"boost"
+released_node = NodePath("Released")
+pressed_node = NodePath("Pressed")
+metadata/_custom_type_script = "uid://blj1o2rj4ll6t"
+
+[node name="Released" type="VBoxContainer" parent="BoostInfo/KeyboardControls" unique_id=168359193]
+layout_mode = 0
+offset_left = -56.0
+offset_top = -23.0
+offset_right = 56.0
+offset_bottom = 23.0
+alignment = 1
+
+[node name="BoostInfoLabel" type="Label" parent="BoostInfo/KeyboardControls/Released" unique_id=774076448]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "HOLD TO CHARGE"
+
+[node name="SpaceReleased" type="TextureRect" parent="BoostInfo/KeyboardControls/Released" unique_id=1098280666]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_4dg0a")
+
+[node name="Pressed" type="VBoxContainer" parent="BoostInfo/KeyboardControls" unique_id=1372340113]
+visible = false
+layout_mode = 0
+offset_left = -56.0
+offset_top = -23.0
+offset_right = 56.0
+offset_bottom = 23.0
+
+[node name="BoostInfoLabel" type="Label" parent="BoostInfo/KeyboardControls/Pressed" unique_id=349066568]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "RELEASE TO BOOST"
+
+[node name="SpacePressed" type="TextureRect" parent="BoostInfo/KeyboardControls/Pressed" unique_id=1950336911]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_w6glm")
+
+[node name="GamepadControls" type="Control" parent="BoostInfo" unique_id=2051074179 node_paths=PackedStringArray("released_node", "pressed_node")]
+visible = false
+layout_mode = 2
+theme = ExtResource("4_2ay8e")
+script = ExtResource("5_w6glm")
+input_action = &"boost"
+released_node = NodePath("Released")
+pressed_node = NodePath("Pressed")
+metadata/_custom_type_script = "uid://blj1o2rj4ll6t"
+
+[node name="Released" type="VBoxContainer" parent="BoostInfo/GamepadControls" unique_id=2055614441]
+layout_mode = 0
+offset_left = -56.0
+offset_top = -23.0
+offset_right = 56.0
+offset_bottom = 23.0
+alignment = 1
+
+[node name="BoostInfoLabel" type="Label" parent="BoostInfo/GamepadControls/Released" unique_id=1073809958]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "HOLD TO CHARGE"
+
+[node name="ButtonImage" type="TextureRect" parent="BoostInfo/GamepadControls/Released" unique_id=1373353945]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_qccst")
+
+[node name="Pressed" type="VBoxContainer" parent="BoostInfo/GamepadControls" unique_id=1455758408]
+visible = false
+layout_mode = 0
+offset_left = -56.0
+offset_top = -23.0
+offset_right = 56.0
+offset_bottom = 23.0
+
+[node name="BoostInfoLabel" type="Label" parent="BoostInfo/GamepadControls/Pressed" unique_id=1483032392]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "RELEASE TO BOOST"
+
+[node name="ButtonImage" type="TextureRect" parent="BoostInfo/GamepadControls/Pressed" unique_id=728611580]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_omqug")
