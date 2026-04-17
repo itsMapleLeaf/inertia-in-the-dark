@@ -92,9 +92,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		reset()
 
 func _process(delta: float) -> void:
-	# collect input
-	turning = Input.get_action_strength("turn_right") - Input.get_action_strength("turn_left")
-	strafing = Input.get_action_strength("strafe_right") - Input.get_action_strength("strafe_left")
+	# digitize inputs for a consistent experience across input devices
+	turning = signf(Input.get_action_strength("turn_right") - Input.get_action_strength("turn_left"))
+	strafing = signf(Input.get_action_strength("strafe_right") - Input.get_action_strength("strafe_left"))
 
 	# apply movement from speed and drag
 	speed = move_toward(speed, 0, delta * DRAG / 2)
