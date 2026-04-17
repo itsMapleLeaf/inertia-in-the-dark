@@ -17,6 +17,10 @@ script = ExtResource("2_apu6u")
 [node name="MenuLayout" parent="." unique_id=2144125427 instance=ExtResource("3_bv7n5")]
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=506610513]
 layout_mode = 2

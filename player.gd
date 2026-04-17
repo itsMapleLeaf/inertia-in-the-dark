@@ -7,12 +7,6 @@ class_name Player
 @export var charge_meter: ProgressBar
 @export var smoke_spawn_marker: Node2D
 @export var hitbox: Area2D
-@export var results_screen: CanvasLayer
-@export var results_title_label: Label
-@export var next_mission_button: Button
-@export var previous_mission_button: Button
-@export var completion_time_label: Label
-@export var results_completion_time_label: Label
 @export var audio_player: AudioStreamPlayer
 
 const TURN_SPEED := 3.0
@@ -33,24 +27,13 @@ var strafing := 0.0
 var charging := false
 var charge_amount := 0.0
 var smoke_wait_time := 0.0
-var completion_time := 0.0
-var running_completion_time := false
 
+signal started_moving
+var started_moving_called := false
 
-var current_level: String:
-	get: return GameplayScreen.last_level
-
-var current_level_index: int:
-	get: return LevelManager.levels.find(current_level)
-
-var next_level: String:
-	get: return LevelManager.levels[next_level_index]
-
-var next_level_index: int:
-	get: return (current_level_index + 1) % LevelManager.levels.size()
-
-var previous_level: String:
-	get: return LevelManager.levels[(current_level_index - 1) % LevelManager.levels.size()]
+signal completed_level
+signal killed
+signal respawned
 
 func reset() -> void:
 	camera.position = global_position
@@ -65,8 +48,7 @@ func reset() -> void:
 	strafing = 0
 	charging = false
 	charge_amount = 0
-	completion_time = 0
-	running_completion_time = false
+	started_moving_called = false
 
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_parallel()
 	tween.tween_property(camera, "position", Vector2.ZERO, 0.3)
@@ -80,7 +62,6 @@ func _ready() -> void:
 	boost_animation_player.play("idle")
 	boost_animation_player.animation_set_next("boost", "idle")
 	charge_meter.get_parent().modulate.a = 0
-	results_screen.hide()
 
 func charge_by(delta: float) -> void:
 	charge_amount = minf(charge_amount + delta / CHARGE_TIME, 1)
@@ -100,8 +81,6 @@ func boost() -> void:
 	boost_animation_player.play("boost")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if results_screen.visible: return
-
 	if event.is_action_pressed("boost"):
 		charging = true
 		$ChargeSound.play()
@@ -111,7 +90,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("reset"):
 		reset()
-
 
 func _process(delta: float) -> void:
 	# collect input
@@ -177,11 +155,10 @@ func _process(delta: float) -> void:
 		get_parent().get_child(get_index() - 1).add_sibling(smoke)
 
 	# update completion time - only start counting when player starts moving
-	if speed > 0 or strafing != 0:
-		running_completion_time = true
-	if running_completion_time:
-		completion_time += delta
-	completion_time_label.text = "%.2f" % completion_time
+	if not started_moving_called and speed > 0 or strafing != 0:
+		started_moving.emit()
+		started_moving_called = true
+
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("LevelComplete"):
@@ -197,16 +174,12 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		$StrafeSound.stop()
 		$ChargeSound.stop()
 
-		_show_results()
+		completed_level.emit()
 
 	if area.is_in_group("LevelObstacle"):
 		_kill()
 
 func _on_level_area_detector_exited_level() -> void:
-	# changing the scene tree can trigger this handler,
-	# and errors happen when the tree is null (e.g. trying to create a tween with the tree)
-	if not get_tree(): return
-
 	_kill()
 
 func _kill():
@@ -223,42 +196,9 @@ func _kill():
 	$StrafeSound.stop()
 	$ChargeSound.stop()
 
+	killed.emit()
+
 	await get_tree().create_timer(0.5).timeout
 
 	reset()
-
-func _show_results():
-	set_process(false)
-	set_process_unhandled_input(false)
-
-	results_title_label.text = "OBJECTIVE %s COMPLETE" % (current_level_index + 1)
-	results_screen.show()
-
-	results_completion_time_label.text = "TIME: %.2f" % completion_time
-
-	if next_level_index == 0:
-		next_mission_button.text = "RETURN TO FIRST MISSION"
-	else:
-		next_mission_button.text = "NEXT MISSION"
-
-	previous_mission_button.visible = current_level_index > 0
-
-	var buttons := results_screen.find_children("", "Button", true)
-	if buttons.size() > 0:
-		var first_button := buttons[0]
-		if first_button is Button:
-			first_button.grab_focus()
-
-func _hide_results():
-	results_screen.hide()
-	set_process(true)
-
-func _on_next_pressed() -> void:
-	GameplayScreen.start(get_tree(), next_level)
-
-func _on_retry_pressed() -> void:
-	reset()
-	_hide_results.call_deferred()
-
-func _on_previous_pressed() -> void:
-	GameplayScreen.start(get_tree(), previous_level)
+	respawned.emit()

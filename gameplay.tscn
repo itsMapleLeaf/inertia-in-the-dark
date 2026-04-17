@@ -2,19 +2,126 @@
 
 [ext_resource type="Script" uid="uid://dk0m1t531fdi6" path="res://gameplay.gd" id="1_n4psk"]
 [ext_resource type="PackedScene" uid="uid://daa8ajbw1ahtp" path="res://menu_layout.tscn" id="2_oe8ih"]
+[ext_resource type="FontFile" uid="uid://biwlw21erfpj8" path="res://resources/AvenuePixel1.1/TTF/AvenuePixel-Regular.ttf" id="3_fbudy"]
 [ext_resource type="StyleBox" uid="uid://ci8aavo3gep60" path="res://menu_overlay_box.tres" id="3_smepj"]
 [ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="3_xuee5"]
 
-[node name="Gameplay" type="Node" unique_id=163159410]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0m7cd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="Gameplay" type="Node2D" unique_id=478107285]
 script = ExtResource("1_n4psk")
 
 [node name="World" type="Node2D" parent="." unique_id=1073373730]
 unique_name_in_owner = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1782371809]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1782371809]
 layer = 2
 
-[node name="PauseMenu" type="Control" parent="CanvasLayer" unique_id=1554140544]
+[node name="CompletionTime" type="Label" parent="UI" unique_id=997369957]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_top = 18.0
+offset_right = 42.0
+offset_bottom = 56.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_fbudy")
+theme_override_font_sizes/font_size = 25
+text = "TIME: 0.00"
+horizontal_alignment = 1
+
+[node name="ResultsOverlay" type="Panel" parent="UI" unique_id=1123117003]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_xuee5")
+theme_override_styles/panel = ExtResource("3_smepj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ResultsOverlay" unique_id=599220183]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -85.0
+offset_right = 130.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/ResultsOverlay/VBoxContainer" unique_id=143276827]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_xuee5")
+theme_override_font_sizes/font_size = 50
+text = "OBJECTIVE COMPLETE"
+
+[node name="FinalCompletionTime" type="Label" parent="UI/ResultsOverlay/VBoxContainer" unique_id=1031311682]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_fbudy")
+theme_override_font_sizes/font_size = 25
+text = "TIME: 0.00"
+horizontal_alignment = 1
+
+[node name="NextLevelButton" type="Button" parent="UI/ResultsOverlay/VBoxContainer" unique_id=105287102]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 0.588235)
+theme_override_colors/font_focus_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_colors/font_hover_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_fonts/font = ExtResource("3_fbudy")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxFlat_0m7cd")
+text = "NEXT MISSION"
+flat = true
+
+[node name="RetryButton" type="Button" parent="UI/ResultsOverlay/VBoxContainer" unique_id=1726840185]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 0.588235)
+theme_override_colors/font_focus_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_colors/font_hover_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("3_fbudy")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxFlat_0m7cd")
+text = "RETRY MISSION"
+flat = true
+
+[node name="PreviousLevelButton" type="Button" parent="UI/ResultsOverlay/VBoxContainer" unique_id=138764793]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 0.588235)
+theme_override_colors/font_focus_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_colors/font_hover_color = Color(0.309804, 0.631373, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("3_fbudy")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxFlat_0m7cd")
+text = "PREVIOUS MISSION"
+flat = true
+
+[node name="PauseMenu" type="Control" parent="UI" unique_id=1554140544]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -25,7 +132,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_xuee5")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PauseMenu" unique_id=733275295]
+[node name="PanelContainer" type="PanelContainer" parent="UI/PauseMenu" unique_id=733275295]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,39 +141,42 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_smepj")
 
-[node name="MarginContainer" parent="CanvasLayer/PauseMenu/PanelContainer" unique_id=2144125427 instance=ExtResource("2_oe8ih")]
+[node name="MarginContainer" parent="UI/PauseMenu/PanelContainer" unique_id=2144125427 instance=ExtResource("2_oe8ih")]
 layout_mode = 2
 theme = ExtResource("3_xuee5")
 
-[node name="TitleLabel" type="Label" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=1619854304]
+[node name="TitleLabel" type="Label" parent="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=1619854304]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 50
 text = "paused"
 
-[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="1" unique_id=1013075713]
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="1" unique_id=1013075713]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "resume"
 flat = true
 alignment = 0
 
-[node name="SelectLevelButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="2" unique_id=738539409]
+[node name="SelectLevelButton" type="Button" parent="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="2" unique_id=738539409]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "select level"
 flat = true
 alignment = 0
 
-[node name="TitleButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="3" unique_id=967210214]
+[node name="QuitButton" type="Button" parent="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="3" unique_id=967210214]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "return to title"
+text = "quit"
 flat = true
 alignment = 0
 
-[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/SelectLevelButton" to="." method="_on_select_level_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/TitleButton" to="." method="_on_title_button_pressed"]
+[connection signal="pressed" from="UI/ResultsOverlay/VBoxContainer/NextLevelButton" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="UI/ResultsOverlay/VBoxContainer/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="UI/ResultsOverlay/VBoxContainer/PreviousLevelButton" to="." method="_on_previous_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems/SelectLevelButton" to="." method="_on_select_level_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/MarginContainer/MenuItems/QuitButton" to="." method="_on_title_button_pressed"]
 
-[editable path="CanvasLayer/PauseMenu/PanelContainer/MarginContainer"]
+[editable path="UI/PauseMenu/PanelContainer/MarginContainer"]

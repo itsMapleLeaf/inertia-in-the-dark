@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqe8tjvrxvqt1"]
+[gd_scene format=3 uid="uid://dqe8tjvrxvqt1"]
 
 [ext_resource type="Texture2D" uid="uid://dhdl4vtyvsipf" path="res://resources/explosion/explosion00.png" id="1_lgryg"]
 [ext_resource type="Texture2D" uid="uid://dfix87hcjeldg" path="res://resources/explosion/explosion01.png" id="2_3mai4"]
@@ -52,7 +52,7 @@ var opacity := 1.0
 
 func _ready() -> void:
 	frame = randi() % sprite_frames.get_frame_count(\"default\")
-	
+
 	var tween := create_tween().set_ease(Tween.EASE_IN)
 	tween.tween_property(self, \"opacity\", 0, 0.5)
 	await tween.finished
@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 	modulate.a = opacity
 "
 
-[node name="Explosion" type="AnimatedSprite2D"]
+[node name="Explosion" type="AnimatedSprite2D" unique_id=722531791]
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_24rei")
 script = SubResource("GDScript_gqk14")

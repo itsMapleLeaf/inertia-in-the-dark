@@ -15,8 +15,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="inertia in the dark"
-run/main_scene="uid://bsng67sx00bfj"
+run/main_scene="uid://b53wb27v8sgea"
 config/features=PackedStringArray("4.6", "Forward Plus")
+
+[autoload]
+
+ScreenManager="*uid://bayi8jblpbpw6"
 
 [display]
 
