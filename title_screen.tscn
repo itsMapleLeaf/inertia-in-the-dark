@@ -32,7 +32,6 @@ flat = true
 alignment = 0
 
 [node name="SelectLevelButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(1851309484, 1851309484) index="2" unique_id=160800621]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 25

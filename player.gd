@@ -36,34 +36,21 @@ var smoke_wait_time := 0.0
 var completion_time := 0.0
 var running_completion_time := false
 
-# this really shouldn't be here, but game jam code LOL
-var levels := [
-	"res://levels/straight.tscn",
-	"res://levels/turns.tscn",
-	"res://levels/snake.tscn",
-	"res://levels/split_paths.tscn",
-	"res://levels/big_curve.tscn",
-	"res://levels/obstacles.tscn",
-	"res://levels/hard_turns.tscn",
-	"res://levels/gravity_pits.tscn",
-	"res://levels/hell.tscn",
-	"res://levels/end.tscn",
-]
 
 var current_level: String:
 	get: return get_tree().current_scene.scene_file_path
 
 var current_level_index: int:
-	get: return levels.find(current_level)
+	get: return LevelManager.levels.find(current_level)
 
 var next_level: String:
-	get: return levels[next_level_index]
+	get: return LevelManager.levels[next_level_index]
 
 var next_level_index: int:
-	get: return (current_level_index + 1) % levels.size()
+	get: return (current_level_index + 1) % LevelManager.levels.size()
 
 var previous_level: String:
-	get: return levels[(current_level_index - 1) % levels.size()]
+	get: return LevelManager.levels[(current_level_index - 1) % LevelManager.levels.size()]
 
 func reset() -> void:
 	camera.position = global_position

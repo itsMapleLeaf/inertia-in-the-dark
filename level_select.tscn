@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://dqp51p1lcka7u"]
 
+[ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="1_wevku"]
+[ext_resource type="Script" uid="uid://dm7lrqjhitymm" path="res://level_select.gd" id="2_apu6u"]
+[ext_resource type="PackedScene" uid="uid://daa8ajbw1ahtp" path="res://menu_layout.tscn" id="3_bv7n5"]
+
 [node name="LevelSelect" type="Control" unique_id=1173183298]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +11,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_wevku")
+script = ExtResource("2_apu6u")
+
+[node name="MenuLayout" parent="." unique_id=2144125427 instance=ExtResource("3_bv7n5")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=506610513]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 50
+text = "select level"
+
+[node name="LevelButtonGrid" type="GridContainer" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="1" unique_id=975334483]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 16
+columns = 2
+
+[node name="LevelButton" type="Button" parent="MenuLayout/MenuItems/LevelButtonGrid" unique_id=1027023326]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "level 1"
+flat = true
+alignment = 0
+
+[node name="BackButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="2" unique_id=1105430479]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 25
+text = "back"
+flat = true
+alignment = 0
+
+[connection signal="pressed" from="MenuLayout/MenuItems/BackButton" to="." method="_on_back_button_pressed"]
+
+[editable path="MenuLayout"]
