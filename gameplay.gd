@@ -3,8 +3,8 @@ class_name GameplayScreen
 
 const LEVELS := [
 	&"res://levels/straight.tscn",
-	&"res://levels/turns.tscn",
 	&"res://levels/snake.tscn",
+	&"res://levels/turns.tscn",
 	&"res://levels/split_paths.tscn",
 	&"res://levels/big_curve.tscn",
 	&"res://levels/obstacles.tscn",
