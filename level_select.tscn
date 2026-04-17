@@ -22,13 +22,16 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=506610513]
+[node name="MenuItems" parent="MenuLayout" index="0" unique_id=1851309484]
+mouse_filter = 0
+
+[node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" index="0" unique_id=506610513]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 50
 text = "select level"
 
-[node name="LevelButtonGrid" type="GridContainer" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="1" unique_id=975334483]
+[node name="LevelButtonGrid" type="GridContainer" parent="MenuLayout/MenuItems" index="1" unique_id=975334483]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
@@ -43,7 +46,7 @@ text = "level 1"
 flat = true
 alignment = 0
 
-[node name="BackButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="2" unique_id=1105430479]
+[node name="BackButton" type="Button" parent="MenuLayout/MenuItems" index="2" unique_id=1105430479]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 25

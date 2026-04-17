@@ -17,13 +17,17 @@ script = ExtResource("2_ak2if")
 [node name="MenuLayout" parent="." unique_id=1851309484 instance=ExtResource("3_ig5kc")]
 layout_mode = 1
 
-[node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(1851309484, 1851309484) index="0" unique_id=1701492378]
+[node name="MenuItems" parent="MenuLayout" index="0" unique_id=1851309484]
+mouse_filter = 0
+
+[node name="TitleLabel" type="Label" parent="MenuLayout/MenuItems" index="0" unique_id=1701492378]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 50
 text = "inertia in the dark"
 
-[node name="StartButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(1851309484, 1851309484) index="1" unique_id=960082657]
+[node name="StartButton" type="Button" parent="MenuLayout/MenuItems" index="1" unique_id=960082657]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 25
@@ -31,7 +35,7 @@ text = "start"
 flat = true
 alignment = 0
 
-[node name="SelectLevelButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(1851309484, 1851309484) index="2" unique_id=160800621]
+[node name="SelectLevelButton" type="Button" parent="MenuLayout/MenuItems" index="2" unique_id=160800621]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 25
@@ -39,7 +43,7 @@ text = "select level"
 flat = true
 alignment = 0
 
-[node name="QuitButton" type="Button" parent="MenuLayout/MenuItems" parent_id_path=PackedInt32Array(1851309484, 1851309484) index="3" unique_id=707510090]
+[node name="QuitButton" type="Button" parent="MenuLayout/MenuItems" index="3" unique_id=707510090]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 25

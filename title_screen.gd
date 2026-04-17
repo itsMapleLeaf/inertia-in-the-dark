@@ -1,5 +1,16 @@
 extends Control
 
+@onready var start_button: Button = %StartButton
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_up")\
+	or event.is_action_pressed("ui_right")\
+	or event.is_action_pressed("ui_down")\
+	or event.is_action_pressed("ui_left"):
+		if not get_viewport().gui_get_focus_owner():
+			find_next_valid_focus().grab_focus()
+			get_viewport().set_input_as_handled()
+
 
 func _on_start_button_pressed() -> void:
 	var screen: GameplayScreen = ScreenManager.push_scene(preload("res://gameplay.tscn"))

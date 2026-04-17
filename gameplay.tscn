@@ -6,6 +6,22 @@
 [ext_resource type="StyleBox" uid="uid://ci8aavo3gep60" path="res://menu_overlay_box.tres" id="3_smepj"]
 [ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="3_xuee5"]
 
+[sub_resource type="GDScript" id="GDScript_cbffv"]
+script/source = "extends Panel
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_up\")\\
+	or event.is_action_pressed(\"ui_right\")\\
+	or event.is_action_pressed(\"ui_down\")\\
+	or event.is_action_pressed(\"ui_left\"):
+		if not get_viewport().gui_get_focus_owner():
+			var next_focus := find_next_valid_focus()
+			if next_focus:
+				next_focus.grab_focus()
+				get_viewport().set_input_as_handled()
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0m7cd"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 1
@@ -13,6 +29,21 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="GDScript" id="GDScript_smepj"]
+script/source = "extends Control
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_up\")\\
+	or event.is_action_pressed(\"ui_right\")\\
+	or event.is_action_pressed(\"ui_down\")\\
+	or event.is_action_pressed(\"ui_left\"):
+		if not get_viewport().gui_get_focus_owner():
+			var next_focus := find_next_valid_focus()
+			if next_focus:
+				next_focus.grab_focus()
+				get_viewport().set_input_as_handled()
+"
 
 [node name="Gameplay" type="Node2D" unique_id=478107285]
 script = ExtResource("1_n4psk")
@@ -49,6 +80,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_xuee5")
 theme_override_styles/panel = ExtResource("3_smepj")
+script = SubResource("GDScript_cbffv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/ResultsOverlay" unique_id=599220183]
 layout_mode = 1
@@ -131,6 +163,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_xuee5")
+script = SubResource("GDScript_smepj")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/PauseMenu" unique_id=733275295]
 layout_mode = 1

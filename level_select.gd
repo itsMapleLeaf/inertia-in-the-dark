@@ -17,6 +17,14 @@ func _ready() -> void:
 
 	level_button_template.visible = false
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_up")\
+	or event.is_action_pressed("ui_right")\
+	or event.is_action_pressed("ui_down")\
+	or event.is_action_pressed("ui_left"):
+		if not get_viewport().gui_get_focus_owner():
+			find_next_valid_focus().grab_focus()
+			get_viewport().set_input_as_handled()
 
 func _level_button_pressed(level_path: StringName):
 	ScreenManager.pop()
