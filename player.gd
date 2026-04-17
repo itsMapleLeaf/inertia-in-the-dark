@@ -38,7 +38,7 @@ var running_completion_time := false
 
 
 var current_level: String:
-	get: return get_tree().current_scene.scene_file_path
+	get: return GameplayScreen.last_level
 
 var current_level_index: int:
 	get: return LevelManager.levels.find(current_level)
@@ -112,8 +112,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"):
 		reset()
 
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
 
 func _process(delta: float) -> void:
 	# collect input
@@ -205,6 +203,10 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		_kill()
 
 func _on_level_area_detector_exited_level() -> void:
+	# changing the scene tree can trigger this handler,
+	# and errors happen when the tree is null (e.g. trying to create a tween with the tree)
+	if not get_tree(): return
+
 	_kill()
 
 func _kill():
@@ -252,11 +254,11 @@ func _hide_results():
 	set_process(true)
 
 func _on_next_pressed() -> void:
-	get_tree().change_scene_to_file(next_level)
+	GameplayScreen.start(get_tree(), next_level)
 
 func _on_retry_pressed() -> void:
 	reset()
 	_hide_results.call_deferred()
 
 func _on_previous_pressed() -> void:
-	get_tree().change_scene_to_file(previous_level)
+	GameplayScreen.start(get_tree(), previous_level)

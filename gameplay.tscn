@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cpwg4x8a5mlk0"]
+
+[ext_resource type="Script" uid="uid://dk0m1t531fdi6" path="res://gameplay.gd" id="1_n4psk"]
+[ext_resource type="PackedScene" uid="uid://daa8ajbw1ahtp" path="res://menu_layout.tscn" id="2_oe8ih"]
+[ext_resource type="StyleBox" uid="uid://ci8aavo3gep60" path="res://menu_overlay_box.tres" id="3_smepj"]
+[ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="3_xuee5"]
+
+[node name="Gameplay" type="Node" unique_id=163159410]
+script = ExtResource("1_n4psk")
+
+[node name="World" type="Node2D" parent="." unique_id=1073373730]
+unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1782371809]
+layer = 2
+
+[node name="PauseMenu" type="Control" parent="CanvasLayer" unique_id=1554140544]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_xuee5")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/PauseMenu" unique_id=733275295]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_smepj")
+
+[node name="MarginContainer" parent="CanvasLayer/PauseMenu/PanelContainer" unique_id=2144125427 instance=ExtResource("2_oe8ih")]
+layout_mode = 2
+theme = ExtResource("3_xuee5")
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="0" unique_id=1619854304]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 50
+text = "paused"
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="1" unique_id=1013075713]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "resume"
+flat = true
+alignment = 0
+
+[node name="SelectLevelButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="2" unique_id=738539409]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "select level"
+flat = true
+alignment = 0
+
+[node name="TitleButton" type="Button" parent="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems" parent_id_path=PackedInt32Array(2144125427, 1851309484) index="3" unique_id=967210214]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "return to title"
+flat = true
+alignment = 0
+
+[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/SelectLevelButton" to="." method="_on_select_level_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/PanelContainer/MarginContainer/MenuItems/TitleButton" to="." method="_on_title_button_pressed"]
+
+[editable path="CanvasLayer/PauseMenu/PanelContainer/MarginContainer"]

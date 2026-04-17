@@ -13,7 +13,7 @@ func _ready() -> void:
 		new_level_button.text = "level %02d" % (level_number)
 
 		new_level_button.pressed.connect(func():
-			get_tree().change_scene_to_file(level_path)
+			GameplayScreen.start(get_tree(), level_path)
 		)
 
 		level_button_grid.add_child(new_level_button)

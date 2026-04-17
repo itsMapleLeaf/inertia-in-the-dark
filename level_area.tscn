@@ -1,13 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://3iwnktuef6o7"]
+[gd_scene format=3 uid="uid://3iwnktuef6o7"]
 
-[ext_resource type="Script" path="res://level_area.gd" id="1_ahvb6"]
+[ext_resource type="Script" uid="uid://bnf1s8mcto4y7" path="res://level_area.gd" id="1_ahvb6"]
 
-[node name="LevelArea" type="Area2D" groups=["LevelArea"]]
+[node name="LevelArea" type="Area2D" unique_id=1467205849 groups=["LevelArea"]]
+disable_mode = 1
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_ahvb6")
 
-[node name="PolygonTemplate" type="Polygon2D" parent="."]
+[node name="PolygonTemplate" type="Polygon2D" parent="." unique_id=72900088]
 visible = false
 color = Color(0.101961, 0.0980392, 0.14902, 1)

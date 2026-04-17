@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cp0lryfrl5fi3" path="res://resources/explosionCrunch_000.ogg" id="7_kasaw"]
 [ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="7_nvl01"]
 [ext_resource type="AudioStream" uid="uid://eo52h7g682yp" path="res://resources/spaceEngine_003.ogg" id="8_8skdt"]
+[ext_resource type="StyleBox" uid="uid://ci8aavo3gep60" path="res://menu_overlay_box.tres" id="8_ivps1"]
 [ext_resource type="AudioStream" uid="uid://detpacdw65ij5" path="res://resources/Hit 2 - Sound effects Pack 2.ogg" id="9_3jxtw"]
 [ext_resource type="AudioStream" uid="uid://cf3ncvkguuvkb" path="res://resources/1up 2 - Sound effects Pack 2.ogg" id="10_ch54k"]
 
@@ -78,6 +79,7 @@ var current_tween: Tween
 func shake(amount: float, duration: float):
 	if current_tween: current_tween.stop()
 	intensity = amount
+
 	current_tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	current_tween.tween_property(self, \"intensity\", 0, duration)
 
@@ -111,9 +113,6 @@ anti_aliasing = false
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l3wbb"]
 radius = 9.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sruta"]
-bg_color = Color(0, 0, 0, 0.576471)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_338ve"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -234,15 +233,19 @@ metadata/_edit_lock_ = true
 shape = SubResource("CircleShape2D_l3wbb")
 
 [node name="LevelAreaDetector" parent="." unique_id=1112459653 instance=ExtResource("5_e3s28")]
+disable_mode = 1
 
 [node name="LevelAreaDetector2" parent="." unique_id=731377124 instance=ExtResource("5_e3s28")]
 position = Vector2(6, -6)
+disable_mode = 1
 
 [node name="LevelAreaDetector3" parent="." unique_id=2022508400 instance=ExtResource("5_e3s28")]
 position = Vector2(6, 6)
+disable_mode = 1
 
 [node name="LevelAreaDetector4" parent="." unique_id=2125582572 instance=ExtResource("5_e3s28")]
 position = Vector2(-6, 6)
+disable_mode = 1
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=598533041]
 
@@ -270,7 +273,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("7_nvl01")
-theme_override_styles/panel = SubResource("StyleBoxFlat_sruta")
+theme_override_styles/panel = ExtResource("8_ivps1")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ResultsScreen/Panel" unique_id=1830895554]
 layout_mode = 1
