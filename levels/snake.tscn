@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bffyh0psdenmv" path="res://wormhole.tscn" id="2_4wdqf"]
 [ext_resource type="PackedScene" uid="uid://uof154pm5wte" path="res://regular_collision_polygon_2d.tscn" id="3_073sn"]
 [ext_resource type="Theme" uid="uid://q5lsdktum6xl" path="res://theme.tres" id="4_knv56"]
+[ext_resource type="Script" uid="uid://c2nxyh7qfqqs4" path="res://input_detector_switch.gd" id="5_0ugow"]
 [ext_resource type="Texture2D" uid="uid://ctmm3ajslo4iu" path="res://resources/gdb-keyboard-2.png" id="5_ugwt2"]
 [ext_resource type="Texture2D" uid="uid://3a514c7vrcyt" path="res://resources/gdb-xbox-2.png" id="6_0ugow"]
 
@@ -17,11 +18,19 @@ region = Rect2(96, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o3o35"]
 atlas = ExtResource("6_0ugow")
-region = Rect2(216, 72, 16, 16)
+region = Rect2(336, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rdjtx"]
 atlas = ExtResource("6_0ugow")
-region = Rect2(100, 180, 24, 24)
+region = Rect2(336, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knv56"]
+atlas = ExtResource("6_0ugow")
+region = Rect2(336, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugwt2"]
+atlas = ExtResource("6_0ugow")
+region = Rect2(336, 96, 16, 16)
 
 [node name="Level" type="Node2D" unique_id=74875295]
 metadata/_edit_horizontal_guides_ = []
@@ -49,18 +58,30 @@ position = Vector2(-15.6906, -1146.48)
 
 [node name="Control" type="Control" parent="." unique_id=2000369120]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("4_knv56")
 
 [node name="StrafeInfo" type="VBoxContainer" parent="Control" unique_id=1946231554]
 layout_mode = 0
-offset_left = -207.0
-offset_top = -98.0
-offset_right = -98.0
-offset_bottom = -52.0
+offset_left = -249.0
+offset_top = -95.0
+offset_right = -102.0
+offset_bottom = -19.0
 theme = ExtResource("4_knv56")
 alignment = 1
 metadata/_edit_group_ = true
+
+[node name="InputDetectorSwitch" type="Node" parent="Control/StrafeInfo" unique_id=1713102745 node_paths=PackedStringArray("keyboard_node", "gamepad_node")]
+script = ExtResource("5_0ugow")
+keyboard_node = NodePath("../KeyboardInputs")
+gamepad_node = NodePath("../GamepadInputs")
+metadata/_custom_type_script = "uid://c2nxyh7qfqqs4"
 
 [node name="Label" type="Label" parent="Control/StrafeInfo" unique_id=841025808]
 layout_mode = 2
@@ -71,6 +92,7 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="KeyboardInputs" type="HBoxContainer" parent="Control/StrafeInfo" unique_id=71057053]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -87,9 +109,9 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_7vax0")
 
 [node name="GamepadInputs" type="HBoxContainer" parent="Control/StrafeInfo" unique_id=1122435214]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 7
 
 [node name="GamepadButton" type="TextureRect" parent="Control/StrafeInfo/GamepadInputs" unique_id=808331873]
 layout_mode = 2
@@ -102,3 +124,24 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_rdjtx")
+
+[node name="Label2" type="Label" parent="Control/StrafeInfo/GamepadInputs" unique_id=1650118814]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "or"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="GamepadButton3" type="TextureRect" parent="Control/StrafeInfo/GamepadInputs" unique_id=1163556063]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_knv56")
+
+[node name="GamepadButton4" type="TextureRect" parent="Control/StrafeInfo/GamepadInputs" unique_id=501602517]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ugwt2")
